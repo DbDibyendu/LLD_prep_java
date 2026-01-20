@@ -2,6 +2,53 @@ import java.util.*;
 import java.nio.file.*;
 import java.io.IOException;
 
+// ==================== FUNCTIONAL REQUIREMENTS ====================
+//
+// 1. The system should read files from a given directory path.
+//
+// 3. The system should support filtering files based on:
+//    - File size range (min size, max size)
+//    - File extension (e.g. .txt, .log)
+//
+// 4. The system should allow combining multiple filters together
+//    (e.g. size + extension).
+//
+// 5. The filtering logic should be extensible without modifying
+//    existing search or scan logic.
+//
+// 6. The directory scanning logic should be separated from
+//    filtering logic.
+//
+// 7. Filters should be applied dynamically at runtime
+//    (pluggable strategies).
+//
+// 8. The system should not apply file-based filters to directories.
+//
+//
+// ==================== CORE ENTITIES ====================
+//
+// 1. FileInfo
+//    - Represents metadata of a file or directory
+//    - Fields: path, size, extension, isDirectory
+//
+// 2. Filter (Interface)
+//    - Abstraction for all filtering strategies
+//
+// 3. SizeFilter (implements filter)
+//    - Filters files based on size constraints
+//
+// 4. ExtensionFilter (implements filter)
+//    - Filters files based on file extension
+//
+// 5. CompositeFilter  (implements filter)
+//    - Combines multiple filters using logical AND
+//
+// 6. DirectoryScanner (implements filter)
+//    - Reads the filesystem and constructs FileInfo objects
+//
+// 7. FileSearchEngine
+//    - Orchestrates directory scanning and filter application
+//
 /*
  =========================
   FileInfo (Entity)
